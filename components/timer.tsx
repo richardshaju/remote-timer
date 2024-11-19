@@ -2,11 +2,13 @@
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import styles from "./Timer.module.css";
+ import { Socket } from "socket.io-client";
 
 const Timer = () => {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const [socket, setSocket] = useState<any>(null);
+   
+  const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
     // components/Timer.tsx - Update socket initialization
