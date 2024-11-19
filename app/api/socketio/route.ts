@@ -6,7 +6,7 @@ import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
 
 let io: SocketIOServer | null = null;
-let httpServer: any;
+let httpServer: ReturnType<typeof createServer> | undefined;
 
 if (!httpServer) {
   httpServer = createServer();
@@ -41,7 +41,7 @@ export async function GET() {
       });
     });
 
-    httpServer.listen(3001);
+    httpServer?.listen(3001);
   }
 
   return NextResponse.json({ success: true });
