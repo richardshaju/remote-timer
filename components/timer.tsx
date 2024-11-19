@@ -13,10 +13,10 @@ const Timer = () => {
   useEffect(() => {
     // components/Timer.tsx - Update socket initialization
     const socketInit = async () => {
-      const socket = io({
-        path: "/api/socketio",
-        addTrailingSlash: false,
-      });
+        const socket = io('https://remote-timer-five.vercel.app', {
+            path: '/api/socketio',
+            addTrailingSlash: false,
+          });
 
       setSocket(socket);
 
