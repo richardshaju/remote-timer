@@ -8,6 +8,10 @@ export const runtime = 'nodejs';
 let io: SocketIOServer | null = null;
 let httpServer: ReturnType<typeof createServer> | undefined;
 
+const SOCKET_PORT = process.env.NODE_ENV === 'production' ? 
+  parseInt(process.env.PORT || '3000') : 3001;
+
+
 if (!httpServer) {
   httpServer = createServer();
 }
@@ -18,8 +22,10 @@ export async function GET() {
       path: '/api/socketio',
       addTrailingSlash: false,
       cors: {
-        origin: '*',
-        methods: ['GET', 'POST']
+        origin: process.env.NODE_ENV === 'production' 
+          ? process.env.NEXT_PUBLIC_SOCKET_URL 
+          : 'http://localhost:3000',
+        methods: ['GET', 'POST'],
       }
     });
 
@@ -41,7 +47,9 @@ export async function GET() {
       });
     });
 
-    httpServer?.listen(3001);
+    httpServer?.listen(SOCKET_PORT, () => {
+      console.log(`Socket.IO server running on port ${SOCKET_PORT}`);
+    });
   }
 
   return NextResponse.json({ success: true });

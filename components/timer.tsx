@@ -10,10 +10,12 @@ const Timer = () => {
    
   const [socket, setSocket] = useState<Socket | null>(null);
 
+  console.log(process.env.NEXT_PUBLIC_SOCKET_URL);
+      
   useEffect(() => {
     // components/Timer.tsx - Update socket initialization
     const socketInit = async () => {
-        const socket = io('https://remote-timer-five.vercel.app', {
+        const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL, {
             path: '/api/socketio',
             addTrailingSlash: false,
           });
